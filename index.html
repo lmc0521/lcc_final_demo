@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>funGame</title>
+
+
+    <style>
+        body {
+            background-color: blanchedalmond;
+            text-align: center;
+        }
+
+        #status {
+            text-align: center;
+            width: 100px;
+            font-size: large;
+            padding: 10px 10px;
+            margin: 12px auto 0 0;
+            border-radius: 12px;
+            border: 3px black solid;
+
+        }
+
+        #status2 {
+            text-align: center;
+            width: 100px;
+            font-size: large;
+            padding: 10px 10px;
+            margin: 12px 0 0 auto;
+            border-radius: 12px;
+            border: 3px black solid;
+
+        }
+
+        .action {
+            text-align: center;
+            background-color: aqua;
+            width: 500px;
+            font-size: large;
+            padding: 10px 10px;
+            margin: 12px auto;
+            border-radius: 12px;
+            border: 3px black solid;
+        }
+
+        #result {
+            font-size: xx-large;
+            background-color: red;
+
+        }
+
+        #img1 {
+            position: relative;
+            animation-name: example;
+            animation-duration: 1s;
+            animation-iteration-count: 1;
+            animation-direction: normal;
+        }
+
+        #img2 {
+            position: relative;
+            animation-name: example2;
+            animation-duration: 1s;
+            animation-iteration-count: 1;
+            animation-direction: normal;
+        }
+
+        @keyframes example {
+            0% {
+                /* background-color: red; */
+                left: 0px;
+                top: 0px;
+            }
+
+            50% {
+                /* background-color: blue; */
+                left: 0px;
+                top: 100px;
+            }
+
+            100% {
+                /* background-color: red; */
+                left: 0px;
+                top: 0px;
+            }
+        }
+
+        @keyframes example2 {
+            0% {
+                /* background-color: red; */
+                right: 0px;
+                top: 0px;
+            }
+
+            50% {
+                /* background-color: blue; */
+                right: 0px;
+                top: -100px;
+            }
+
+            100% {
+                /* background-color: red; */
+                right: 0px;
+                top: 0px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <img src="imgs/title.jfif" alt="" height="100px">
+    <h1>寶可夢大亂鬥</h1>
+
+    <div id="status" style="display: inline-block; vertical-align: top;"><span>HP:100</span><br><span>SP:100</span>
+    </div>
+
+    <img id="img1" style="display: inline-block;" src="imgs/enemy.PNG" alt="" width="150px">
+
+    <hr>
+    <div id="status2" style="display: inline-block; vertical-align: top;"><span>HP:100</span><br><span>SP:100</span>
+    </div>
+    <img id="img2" style="display: inline-block;" src="imgs/pikachu.PNG" alt="" width="250px">
+    <div class="action"><button style="width: 80px;height: 50px;font-size: x-large;" onclick="attack()"
+            id="attack">攻擊</button><button style="width: 80px;height: 50px;font-size: x-large;" onclick="recover()"
+            id="recover">道具</button><br><button style="width: 80px;height: 50px;font-size: x-large;" onclick="skill()"
+            id="skill">大招</button><button style="width: 80px;height: 50px;font-size: x-large;" onclick="restart()"
+            id="restart">重新</button></div>
+    <div id="result">結果</div>
+
+    <script>
+        let hp_enemy = 100;
+        let sp_enemy = 100;
+        let hp_user = 100;
+        let sp_user = 100;
+        let img_enemy = document.getElementById('img1');
+        let img_user = document.getElementById('img2');
+
+
+        function attack() {
+            let damage = getRandomInt(1, 30);
+            let damage_come = getRandomInt(1, 30);
+            hp_enemy -= damage;
+            hp_user -= damage_come;
+            if (hp_enemy <= 0) {
+                hp_enemy = 0;
+            }
+            if (hp_user <= 0) {
+                hp_user = 0;
+            }
+            if (hp_enemy == 0) {
+                img_enemy.src = "imgs/ball.jfif";
+                resultEl.innerHTML = "皮卡丘獲勝!!";
+                attackEl.disabled = true;
+                recoverEl.disabled = true;
+                skillEl.disabled = true;
+            }
+            else if (hp_user == 0) {
+                img_user.src = "imgs/ball.jfif";
+                resultEl.innerHTML = "皮卡丘努力過了qq";
+                attackEl.disabled = true;
+                recoverEl.disabled = true;
+                skillEl.disabled = true;
+            }
+            else {
+                resultEl.innerHTML = "皮卡丘使出電光一閃~<br>然後吃了一記撞擊~";
+            }
+            statusEl.innerHTML = `<div ><span>HP:${hp_enemy}</span><br><span>SP:${sp_enemy}</span></div>`;
+            status2El.innerHTML = `<div ><span>HP:${hp_user}</span><br><span>SP:${sp_user}</span></div>`;
+            console.log(damage, damage_come, hp_enemy, hp_user);
+        }
+
+        function skill() {
+            let damage = getRandomInt(30, 60);
+            let damage_come = getRandomInt(1, 30);
+            let sp_damage = getRandomInt(30, 50);
+            hp_enemy -= damage;
+            hp_user -= damage_come;
+            sp_user -= sp_damage;
+
+            if (sp_user < 50) {
+                skillEl.disabled = true;
+            }
+            if (hp_enemy <= 0) {
+                hp_enemy = 0;
+            }
+            if (hp_user <= 0) {
+                hp_user = 0;
+            }
+            if (sp_user <= 0) {
+                sp_user = 0;
+            }
+            if (hp_enemy == 0) {
+                img_enemy.src = "imgs/ball.jfif";
+                attackEl.disabled = true;
+                recoverEl.disabled = true;
+                skillEl.disabled = true;
+                resultEl.innerHTML = "皮卡丘獲勝了但也累癱了~";
+            }
+            else if (hp_user <= 0) {
+                img_user.src = "imgs/ball.jfif";
+                attackEl.disabled = true;
+                recoverEl.disabled = true;
+                skillEl.disabled = true;
+                resultEl.innerHTML = "皮卡丘努力過了qq";
+            }
+            else {
+
+                resultEl.innerHTML = '皮卡丘使出大絕"十萬伏特"~<br>然後吃了一記撞擊~';
+
+            }
+            statusEl.innerHTML = `<div ><span>HP:${hp_enemy}</span><br><span>SP:${sp_enemy}</span></div>`;
+            status2El.innerHTML = `<div ><span>HP:${hp_user}</span><br><span>SP:${sp_user}</span></div>`;
+        }
+
+        function recover() {
+            let amount_recover = getRandomInt(1, 30);
+            hp_test = hp_user;
+            sp_test = sp_user;
+            hp_user += amount_recover;
+            sp_user += amount_recover;
+            if (hp_user > 100) {
+                hp_user = 100;
+            }
+            if (sp_user > 100) {
+                sp_user = 100;
+            }
+            let damage_come = getRandomInt(1, 30);
+            hp_user -= damage_come;
+            if (hp_user <= 0) {
+                hp_user = 0;
+            }
+            if (hp_user == 0) {
+                img_user.src = "imgs/ball.jfif";
+                resultEl.innerHTML = "皮卡丘努力過了qq";
+                attackEl.disabled = true;
+                recoverEl.disabled = true;
+                skillEl.disabled = true;
+            }
+            else {
+                resultEl.innerHTML = "皮卡丘表示番茄醬好吃~!";
+            }
+            statusEl.innerHTML = `<div ><span>HP:${hp_enemy}</span><br><span>SP:${sp_enemy}</span></div>`;
+            status2El.innerHTML = `<div ><span>HP:${hp_user}</span><br><span>SP:${sp_user}</span></div>`;
+            console.log(amount_recover, hp_test, sp_test, damage_come)
+        }
+
+        function restart() {
+            img_enemy.src = "imgs/enemy.png";
+            img_user.src = "imgs/pikachu.png";
+            hp_enemy = 100;
+            sp_enemy = 100;
+            hp_user = 100;
+            sp_user = 100;
+            attackEl.disabled = false;
+            recoverEl.disabled = false;
+            skillEl.disabled = false;
+            statusEl.innerHTML = `<div ><span>HP:${hp_enemy}</span><br><span>SP:${sp_enemy}</span></div>`;
+            status2El.innerHTML = `<div ><span>HP:${hp_user}</span><br><span>SP:${sp_user}</span></div>`;
+            resultEl.innerHTML = "按了重新又是一條好漢!!";
+        }
+
+        const resultEl = document.querySelector("#result");
+        const statusEl = document.querySelector("#status");
+        const status2El = document.querySelector("#status2");
+        const attackEl = document.querySelector("#attack");
+        const recoverEl = document.querySelector("#recover");
+        const skillEl = document.querySelector("#skill");
+        const restartEl = document.querySelector("#restart");
+        // const img1El = document.querySelector("#img1");
+        // const img2El = document.querySelector("#img2");
+
+        function getRandomInt(start, end) {
+            return Math.floor(Math.random() * (end - start + 1)) + start;
+        }
+    </script>
+</body>
+
+</html>
