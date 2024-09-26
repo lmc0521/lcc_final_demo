@@ -170,7 +170,31 @@
             statusEl.innerHTML = `<div ><span>HP:${hp_enemy}</span><br><span>SP:${sp_enemy}</span></div>`;
             status2El.innerHTML = `<div ><span>HP:${hp_user}</span><br><span>SP:${sp_user}</span></div>`;
             console.log(damage, damage_come, hp_enemy, hp_user);
+
+            let start = Date.now();
+
+            let timer = setInterval(function () {
+                let timePassed = Date.now() - start;
+
+                img_enemy.style.top = timePassed / 5 + 'px';
+                img_user.style.bottom = timePassed / 5 + 'px';
+
+
+                if (timePassed > 199) clearInterval(timer);
+
+            }, 20);
+
+            let timer2 = setInterval(function () {
+                let timePassed = Date.now() - start;
+
+                img_enemy.style.top = (200 / 5 - timePassed / 5) + 'px';
+                img_user.style.bottom = (200 / 5 - timePassed / 5) + 'px';
+
+                if (timePassed > 200) clearInterval(timer2);
+
+            }, 20);
         }
+
 
         function skill() {
             let damage = getRandomInt(30, 60);
@@ -183,6 +207,9 @@
             if (sp_user < 50) {
                 skillEl.disabled = true;
             }
+
+
+
             if (hp_enemy <= 0) {
                 hp_enemy = 0;
             }
@@ -213,6 +240,27 @@
             }
             statusEl.innerHTML = `<div ><span>HP:${hp_enemy}</span><br><span>SP:${sp_enemy}</span></div>`;
             status2El.innerHTML = `<div ><span>HP:${hp_user}</span><br><span>SP:${sp_user}</span></div>`;
+
+            let start = Date.now();
+            let timer1 = setInterval(function () {
+                let timePassed = Date.now() - start;
+
+                img_enemy.style.top = timePassed / 5 + 'px';
+                img_user.style.left = timePassed / 5 + 'px';
+
+                if (timePassed > 199) clearInterval(timer1);
+
+            }, 20);
+            let timer2 = setInterval(function () {
+                let timePassed = Date.now() - start;
+
+                img_enemy.style.top = (200 / 5 - timePassed / 5) + 'px';
+                img_user.style.left = (200 / 5 - timePassed / 5) + 'px';
+                // img_user.style.right = timePassed / 5 + 'px';
+
+                if (timePassed > 200) clearInterval(timer2);
+
+            }, 20);
         }
 
         function recover() {
@@ -221,6 +269,9 @@
             sp_test = sp_user;
             hp_user += amount_recover;
             sp_user += amount_recover;
+            if (sp_user >= 50) {
+                skillEl.disabled = false;
+            }
             if (hp_user > 100) {
                 hp_user = 100;
             }
